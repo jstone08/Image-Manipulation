@@ -1,0 +1,226 @@
+Name: README
+ 
+By: Jordan Stone & Jared Lieberman
+ 
+Date: 10/9/16
+
+
+        Architecture:
+        ---------------------------------------------------------------
+        This solution has an architecture with three unique levels of 
+        abstraction. 
+
+        The main source file, ppmtrans.c, uses the A2Methods abstraction 
+        to store and manipulate data within the program. ppmtrans.c also 
+        interacts with pnm.h to assist with reading in data from a file 
+        and prepare the data for manipulation with the A2Methods 
+        abstraction. The A2Methods abstraction is a file that allows a 
+        source file to utilize two different method suites in the 
+        same program, with the same interface. Subsequently, each methods 
+        suite uses a seperate 2D unboxed array ADT. For example, 
+        a2plain.c is one of the two methods suites avaliable to 
+        ppmtrans.c through A2Methods, and a2plain.c uses an UArray2_T. 
+        Secondly, a2blocked.c is the other of the two methods suites 
+        available to A2Methods, which uses an UArray2b_T. 
+
+        The main invariant of the program is that ppmtrans.c will 
+        only interact with the A2Methods abstraction to manipulate the 
+        data. ppmtrans.c will not directly call either of the two abstract 
+        data types, UArray2_T or UArray2b_T. The transformation functions
+        of ppmtrans.c interact with a2methods.h in order to perform the 
+        image transformations.
+
+        The suite of a2methods will interact with two interfaces to 
+        manipulate both blocked and unblocked representations of data.     
+
+
+
+     Rotation Data Analysis:
+     ------------------------------------------------------------------------
+                                    
+    _______________________________________________________________________
+    | image |         tiger.jpg           |            mobo.jpeg          |
+    | name  |                             |                               |
+    -----------------------------------------------------------------------
+    | image |     1600 x 1200 pixels      |        8160 x 6120 pixels     |
+    | size  |                             |                               |
+    -----------------------------------------------------------------------
+    |                       ROW MAJOR 0 DEGREE ROTATION                   |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |         48,617,611 ns       |         1,288,188,644 ns      | 
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |          25.322 ns          |             25.795 ns         |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             25              |               26              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    |                       ROW MAJOR 90 DEGREE ROTATION                  |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |         68,514,258 ns       |         2,136,083,648 ns      |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |          35.685 ns          |             42.774 ns         |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             36              |               43              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    |                       ROW MAJOR 180 DEGREE ROTATION                 |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |        64,834,204  ns       |         1,456,897,614 ns      |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |          33.768 ns          |             29.173 ns         |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             34              |                29             |
+    |instru-|                             |                               |     
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    |                       COL MAJOR 0 DEGREE ROTATION                   |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |        72,809,173 ns        |         1,281,077,248 ns      |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |          37.921 ns          |             25.653 ns         |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             38              |               26              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    ------------------------------------------------------------------------
+    |                       COL MAJOR 90 DEGREE ROTATION                  |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |       79,712,809  ns        |       1,994,733,809   ns      |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |          41.517 ns          |            39.943 ns          |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             42              |               40              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    |                       COL MAJOR 180 DEGREE ROTATION                 |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |        77,710,656 ns        |         1,345,841,695 ns      |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |          40.474 ns          |            26.950 ns          |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             40              |               27              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    |                       BLOCK MAJOR 0 DEGREE ROTATION                 |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |        97,539,182 ns        |         2,523,283,121 ns      |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |         50.802 ns           |            50.527 ns          | 
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             51              |               51              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    |                       BLOCK MAJOR 90 DEGREE ROTATION                |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |        99,336,724 ns        |        2,607,904,335 ns       |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |          51.738 ns          |            52.222 ns          |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             52              |               52              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    |                       BLOCK MAJOR 180 DEGREE ROTATION               |
+    -----------------------------------------------------------------------
+    | total |                             |                               |
+    |  CPU  |       105,917,519 ns        |        2,646,245,250 ns       |
+    | time  |                             |                               |
+    -----------------------------------------------------------------------
+    | time  |                             |                               |
+    |  per  |         55.165 ns           |            52.989 ns          |
+    | pixel |                             |                               |
+    -----------------------------------------------------------------------
+    |number |                             |                               |
+    |   of  |             55              |               53              |
+    |instru-|                             |                               |
+    |-ctions|                             |                               |
+    -----------------------------------------------------------------------
+    -----------------------------------------------------------------------
+    _______________________________________________________________________
+    |                                                                     |
+    |                   SPECIFICATIONS OF TESTING COMPUTER                |
+    |_____________________________________________________________________|
+    |---------------------------------------------------------------------|
+    | Name: ab120d.eecs.tufts.edu                                         |
+    |_____________________________________________________________________|
+    | Model: DELL PRECISION T1700                                         |
+    |_____________________________________________________________________|
+    | Processor: 4 x Intel Core i5-4590                                   |
+    |_____________________________________________________________________|
+    | clock rate: 3.30GHz                                                 |
+    |_____________________________________________________________________|
+
+
+
+     Within the table, it is apparent that the block major mapping functions
+     are much slower than both the column major and row major mapping 
+     functions. We suspect that the dramatic speed decrease is due to the 
+     large amount of math instructions inside the blocked array 
+     implementation. While there is a higher estimated cache hit rate, the 
+     overall speed is slower. 
+
+     Additionally, there is a difference in the time per pixel of the same
+     rotation between the two images, because the size of the image will 
+     have an effect on how efficiently the cache is used. The differences  
+     between the row major and column major mapping functions are due to 
+     locality because the looping structures are the same when testing both 
+     images.  
+
+     For the block major mapping, the number of instructions per pixel is 
+     consistent across image files. Conversely, the number of instructions 
+     per pixel seems to decrease with the row major and column major mapping
+     functions as the image gets larger. 
+
+   
+   
+   
+   
+   
+   
+     We spent 75 hours completing the assignment.
+
